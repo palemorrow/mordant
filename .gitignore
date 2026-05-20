@@ -1,0 +1,14 @@
+*.o
+mordant
+mordant-load
+RunDiff
+MAlonzo/
+build/
+agda/MAlonzo/
+agda/RunDiff
+agda/_build/
+tests/test_mordant
+tests/kernel_test
+tests/diff_gen
+*.bin
+*.agdai
