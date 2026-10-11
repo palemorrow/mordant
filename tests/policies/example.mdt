@@ -1,0 +1,15 @@
+arch x86_64
+
+default errno 1
+
+allow read
+allow write
+allow close
+allow exit
+allow exit_group
+
+allow mmap if arg2 & 0x4 == 0
+
+allow mprotect if arg2 & 0x4 == 0
+
+allow ioctl if arg1 == 0x5401
