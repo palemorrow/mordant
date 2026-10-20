@@ -24,18 +24,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: haskell/actions/setup@v2
+      - uses: haskell-actions/setup@v2
+        id: haskell
         with:
-          ghc-version: "9.6.6"
+          ghc-version: "9.6.7"
           cabal-version: "3.10"
+      - name: cache cabal store
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cabal/store
+            ~/.cabal/packages
+          key: ${{ runner.os }}-agda-2.8.0
       - name: install agda
         run: |
           cabal update
-          cabal install Agda-2.8.0 --overwrite-policy=always
+          cabal install Agda-2.8.0 --overwrite-policy=always -j
           echo "$HOME/.cabal/bin" >> "$GITHUB_PATH"
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
       - name: fetch agda-stdlib 2.3
-        run: |
-          git clone --depth 1 --branch v2.3 https://github.com/agda/agda-stdlib.git "$HOME/agda-stdlib"
+        run: git clone --depth 1 --branch v2.3 https://github.com/agda/agda-stdlib.git "$HOME/agda-stdlib"
       - name: typecheck
         run: make agda AGDA_STDLIB="$HOME/agda-stdlib/src"

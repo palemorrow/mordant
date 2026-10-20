@@ -1,0 +1,3 @@
+name: mordant
+include: .
+depend: standard-library-2.3
